@@ -8,6 +8,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import pe.melamina.tienda.entity.Categoria;
 import pe.melamina.tienda.entity.Producto;
 import pe.melamina.tienda.entity.TipoProducto;
 import pe.melamina.tienda.repository.CategoriaRepository;
@@ -81,40 +82,6 @@ public class DemoDataInitializer implements CommandLineRunner {
                         String imagen, boolean destacado, boolean soloCotizacion, String descripcion) {}
 
     private static final List<Demo> PRODUCTOS = List.of(
-            // ---------- Planchas de melamina 18 mm ----------
-            new Demo("DEMO-PL-BL18", "Plancha de melamina Blanco 18 mm", PLANCHA, "Melamina 18 mm",
-                    "189.00", null, 40, "2.44 x 2.14 m", "Blanco", "18 mm", "plancha-blanco.jpg", true, false,
-                    "La plancha más pedida para closets, cocinas y muebles de oficina. Acabado liso y fácil de limpiar.\nLa cortamos y canteamos a tu medida."),
-            new Demo("DEMO-PL-RS18", "Plancha de melamina Roble 18 mm", PLANCHA, "Melamina 18 mm",
-                    "215.00", "199.00", 25, "2.44 x 2.14 m", "Roble", "18 mm", "plancha-roble.jpg", true, false,
-                    "Veta de roble en tono miel. Ideal para frentes de cocina y escritorios."),
-            new Demo("DEMO-PL-NO18", "Plancha de melamina Nogal 18 mm", PLANCHA, "Melamina 18 mm",
-                    "219.00", null, 18, "2.44 x 2.14 m", "Nogal", "18 mm", "plancha-nogal.jpg", false, false,
-                    "Tono nogal oscuro con veta marcada. Muy usado en closets y muebles de sala."),
-            new Demo("DEMO-PL-GR18", "Plancha de melamina Grafito 18 mm", PLANCHA, "Melamina 18 mm",
-                    "209.00", null, 22, "2.44 x 2.14 m", "Grafito", "18 mm", "plancha-grafito.jpg", true, false,
-                    "Gris oscuro mate. Combina con blanco y con maderas claras."),
-            new Demo("DEMO-PL-CE18", "Plancha de melamina Cedro 18 mm", PLANCHA, "Melamina 18 mm",
-                    "215.00", null, 15, "2.44 x 2.14 m", "Cedro", "18 mm", "plancha-cedro.jpg", false, false,
-                    "Veta rojiza tipo cedro, clásica para dormitorios."),
-            new Demo("DEMO-PL-AL18", "Plancha de melamina Almendra 18 mm", PLANCHA, "Melamina 18 mm",
-                    "209.00", null, 12, "2.44 x 2.14 m", "Almendra", "18 mm", "plancha-almendra.jpg", false, false,
-                    "Madera clara de tono cálido. Da amplitud a espacios pequeños."),
-            new Demo("DEMO-PL-GH18", "Plancha de melamina Gris Humo 18 mm", PLANCHA, "Melamina 18 mm",
-                    "209.00", null, 10, "2.44 x 2.14 m", "Gris Humo", "18 mm", "plancha-gris.jpg", false, false,
-                    "Gris medio liso, sobrio para oficinas y cocinas modernas."),
-            new Demo("DEMO-PL-WE18", "Plancha de melamina Wengué 18 mm", PLANCHA, "Melamina 18 mm",
-                    "225.00", null, 0, "2.44 x 2.14 m", "Wengué", "18 mm", "plancha-wengue.jpg", false, false,
-                    "Madera muy oscura de veta fina. (Producto de muestra sin stock.)"),
-
-            // ---------- Planchas de melamina 15 mm ----------
-            new Demo("DEMO-PL-BL15", "Plancha de melamina Blanco 15 mm", PLANCHA, "Melamina 15 mm",
-                    "165.00", null, 30, "2.44 x 2.14 m", "Blanco", "15 mm", "plancha-blanco-15.jpg", false, false,
-                    "Más liviana, ideal para puertas, cajones y divisiones interiores."),
-            new Demo("DEMO-PL-RS15", "Plancha de melamina Roble 15 mm", PLANCHA, "Melamina 15 mm",
-                    "189.00", null, 14, "2.44 x 2.14 m", "Roble", "15 mm", "plancha-roble-15.jpg", false, false,
-                    "Mismo acabado de la plancha de 18 mm, en espesor para puertas."),
-
             // ---------- Servicios ----------
             new Demo("DEMO-SV-OPT", "Optimización y despiece con Lepton Optimizer", SERVICIO, "Optimización y despiece",
                     "0.00", null, 0, "Por proyecto", null, null, "servicio-optimizacion.jpg", true, true,
@@ -133,11 +100,131 @@ public class DemoDataInitializer implements CommandLineRunner {
                     "Armamos e instalamos tus muebles en Lima. Coordinamos la visita y el precio según el tamaño del trabajo.")
     );
 
+    /** Catálogo real de colores de MelaminCorp (imágenes en resources/demo/muestra-NN-*.jpg). */
+    private record Muestra(int numero, String nombre, String archivo, char grupo) {}
+
+    private static final String MADERADOS = "Maderados";
+    private static final String UNICOLOR = "Unicolor";
+    private static final String ESPECIALES = "Texturas especiales";
+
+    // grupo: M = maderado, U = unicolor, E = textura especial
+    private static final List<Muestra> MUESTRAS = List.of(
+            new Muestra(1, "Panela", "panela", 'M'), new Muestra(2, "Rovere", "rovere", 'M'),
+            new Muestra(3, "Taupe", "taupe", 'U'), new Muestra(4, "Fume", "fume", 'M'),
+            new Muestra(5, "Caramelo", "caramelo", 'M'), new Muestra(6, "Nácar", "nacar", 'M'),
+            new Muestra(7, "Castaño", "castano", 'M'), new Muestra(8, "Arupo", "arupo", 'U'),
+            new Muestra(9, "Ónix", "onix", 'E'), new Muestra(10, "Gales", "gales", 'M'),
+            new Muestra(11, "Duna", "duna", 'M'), new Muestra(12, "Niebla", "niebla", 'U'),
+            new Muestra(13, "Agave", "agave", 'U'), new Muestra(14, "Tivoli", "tivoli", 'M'),
+            new Muestra(15, "Capri", "capri", 'U'), new Muestra(16, "Espresso", "espresso", 'M'),
+            new Muestra(17, "Cemento", "cemento", 'M'), new Muestra(18, "Negro", "negro", 'U'),
+            new Muestra(19, "Coñac", "conac", 'M'), new Muestra(20, "Lino", "lino", 'U'),
+            new Muestra(21, "Milán", "milan", 'M'), new Muestra(22, "Inox", "inox", 'E'),
+            new Muestra(23, "Galápagos", "galapagos", 'E'), new Muestra(24, "Plomo", "plomo", 'U'),
+            new Muestra(25, "Roble Negro", "roble-negro", 'M'), new Muestra(26, "Gris", "gris", 'U'),
+            new Muestra(27, "Cedro", "cedro", 'M'), new Muestra(28, "Roble Gris", "roble-gris", 'M'),
+            new Muestra(29, "Bronce", "bronce", 'E'), new Muestra(30, "Burdeos", "burdeos", 'U'),
+            new Muestra(31, "Cartagena", "cartagena", 'M'), new Muestra(32, "Macadamia", "macadamia", 'M'),
+            new Muestra(33, "Roble Blanco", "roble-blanco", 'M'), new Muestra(34, "Miel", "miel", 'M'),
+            new Muestra(35, "Bardolino", "bardolino", 'M'), new Muestra(36, "Manzano", "manzano", 'M'),
+            new Muestra(37, "Avellana", "avellana", 'M'), new Muestra(38, "Positano", "positano", 'M'),
+            new Muestra(39, "Mamba", "mamba", 'E'), new Muestra(40, "Nazca", "nazca", 'M')
+    );
+
+    /** Colores que se muestran en el inicio. */
+    private static final java.util.Set<Integer> DESTACADAS = java.util.Set.of(1, 13, 16, 39);
+
+    private static final java.util.Map<String, String> DETALLE_ESPECIAL = java.util.Map.of(
+            "Ónix", "textura de piedra", "Inox", "efecto acero cepillado",
+            "Galápagos", "textura en relieve", "Bronce", "efecto metálico", "Mamba", "efecto mármol");
+
+    private void crearCategoriasCatalogo() {
+        crearCategoria(MADERADOS, "Planchas con veta de madera");
+        crearCategoria(UNICOLOR, "Planchas de color liso");
+        crearCategoria(ESPECIALES, "Acabados de piedra, mármol y metálicos");
+    }
+
+    private void crearCategoria(String nombre, String descripcion) {
+        if (categoriaRepository.existsByNombreIgnoreCase(nombre)) return;
+        Categoria c = new Categoria();
+        c.setNombre(nombre);
+        c.setDescripcion(descripcion);
+        c.setTipo(PLANCHA);
+        categoriaRepository.save(c);
+    }
+
+    /** Crea las 40 planchas del catálogo real (no duplica: usa el SKU MC-PL-NN). */
+    private int crearMuestras() {
+        int creados = 0;
+        // Se crean de la 40 a la 1 para que el catálogo ("más recientes") empiece por la 1
+        for (int i = MUESTRAS.size() - 1; i >= 0; i--) {
+            Muestra m = MUESTRAS.get(i);
+            String sku = String.format("MC-PL-%02d", m.numero());
+            String imagen = String.format("muestra-%02d-%s.jpg", m.numero(), m.archivo());
+            if (productoRepository.existsBySkuIgnoreCase(sku)) {
+                copiarImagen(imagen);
+                continue;
+            }
+            String categoria;
+            String precio;
+            int stock;
+            String descripcion;
+            switch (m.grupo()) {
+                case 'U' -> {
+                    categoria = UNICOLOR; precio = "199.00"; stock = 25;
+                    descripcion = "Plancha de melamina unicolor " + m.nombre() + ", de acabado liso y fácil de limpiar. "
+                            + "Combina con los maderados en frentes, puertas y detalles.";
+                }
+                case 'E' -> {
+                    categoria = ESPECIALES; precio = "239.00"; stock = 12;
+                    descripcion = "Plancha de melamina de acabado especial " + m.nombre() + " ("
+                            + DETALLE_ESPECIAL.getOrDefault(m.nombre(), "textura especial")
+                            + "). Para frentes y muebles que buscan destacar.";
+                }
+                default -> {
+                    categoria = MADERADOS; precio = "215.00"; stock = 20;
+                    descripcion = "Plancha de melamina con veta de madera en tono " + m.nombre()
+                            + ". Ideal para closets, cocinas, escritorios y muebles de sala.";
+                }
+            }
+            Producto p = new Producto();
+            p.setSku(sku);
+            p.setNombre("Plancha de melamina " + m.nombre() + " 18 mm");
+            p.setTipo(PLANCHA);
+            p.setCategoria(categoriaRepository.findByNombreIgnoreCase(categoria).orElse(null));
+            p.setPrecio(new BigDecimal(precio)); // precio referencial: reemplázalo por el real
+            p.setStock(stock);
+            p.setMedidas("2.44 x 2.14 m");
+            p.setColor(m.nombre());
+            p.setEspesor("18 mm");
+            p.setDescripcion(descripcion + "\nLa optimizamos, cortamos y canteamos a tu medida.");
+            p.setDestacado(DESTACADAS.contains(m.numero()));
+            p.setSoloCotizacion(false);
+            p.setActivo(true);
+            p.setImagenUrl(copiarImagen(imagen));
+            productoRepository.save(p);
+            creados++;
+        }
+        return creados;
+    }
+
+    /** Las planchas con imágenes generadas (DEMO-PL-*) se ocultan al cargar el catálogo real por primera vez. */
+    private void ocultarPlanchasGeneradas() {
+        productoRepository.findAll().stream()
+                .filter(p -> p.getSku() != null && p.getSku().startsWith("DEMO-PL-") && p.isActivo())
+                .forEach(p -> p.setActivo(false));
+    }
+
     @Override
     @Transactional
     public void run(String... args) {
         if (!cargar) return;
         crearUsuariosDemo();
+        crearCategoriasCatalogo();
+        boolean primeraCargaCatalogo = !productoRepository.existsBySkuIgnoreCase("MC-PL-01");
+        int muestras = crearMuestras();
+        if (primeraCargaCatalogo) ocultarPlanchasGeneradas();
+        if (muestras > 0) log.info("Planchas del catálogo MelaminCorp creadas: {}", muestras);
         int creados = 0;
         for (Demo d : PRODUCTOS) {
             if (productoRepository.existsBySkuIgnoreCase(d.sku())) {
