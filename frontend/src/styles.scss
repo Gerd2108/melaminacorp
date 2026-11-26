@@ -139,6 +139,14 @@ fieldset:disabled { opacity: .7; }
 }
 .marca__canto { width: 12px; height: 28px; border-radius: 2px; background: var(--veta-nogal); box-shadow: inset 0 3px 0 var(--roble); }
 .marca--clara { color: #fff; }
+/* Logo Melamincorp: la altura manda y el ancho se ajusta solo */
+.marca__logo { display: block; height: 46px; width: auto; max-width: 100%; }
+.pie__marca .marca__logo { height: 64px; }
+.admin__lateral .marca__logo { height: auto; width: 100%; max-width: 190px; }
+.marca--login { display: flex; justify-content: center; }
+.marca--login .marca__logo { height: 64px; }
+@media (max-width: 860px) { .cabecera .marca__logo { height: 38px; } }
+@media (max-width: 899px) { .admin__lateral .marca__logo { width: auto; height: 40px; } }
 
 .nav { display: flex; align-items: center; gap: 1.5rem; }
 .nav a { color: var(--tinta); text-decoration: none; font-weight: 600; padding-block: .3rem; border-bottom: 2px solid transparent; }

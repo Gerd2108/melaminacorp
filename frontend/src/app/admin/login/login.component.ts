@@ -11,7 +11,7 @@ import { AuthService } from '../../core/services/auth.service';
   template: `
     <div class="login">
       <form [formGroup]="form" (ngSubmit)="entrar()" class="login__caja" novalidate>
-        <p class="marca"><span class="marca__canto" aria-hidden="true"></span>{{ empresa }}</p>
+        <p class="marca marca--login"><img class="marca__logo" src="/img/logo-melamincorp-fondo-claro.png" [alt]="empresa" width="463" height="120" /></p>
         <h1>Acceso del personal</h1>
         <label class="campo">
           <span>Correo</span>

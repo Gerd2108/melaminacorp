@@ -1,8 +1,7 @@
 <header class="cabecera">
   <div class="contenedor cabecera__fila">
-    <a routerLink="/" class="marca" (click)="menuAbierto = false">
-      <span class="marca__canto" aria-hidden="true"></span>
-      {{ empresa }}
+    <a routerLink="/" class="marca" (click)="menuAbierto = false" [attr.aria-label]="empresa + ', ir al inicio'">
+      <img class="marca__logo" src="/img/logo-melamincorp-fondo-claro.png" [alt]="empresa" width="463" height="120" />
     </a>
 
     <button class="cabecera__menu" type="button" (click)="menuAbierto = !menuAbierto"
@@ -41,8 +40,8 @@
   <div class="contenedor">
     <div class="pie__grilla">
       <div class="pie__marca">
-        <a routerLink="/" class="marca marca--clara">
-          <span class="marca__canto" aria-hidden="true"></span>{{ empresa }}
+        <a routerLink="/" class="marca marca--clara" [attr.aria-label]="empresa + ', ir al inicio'">
+          <img class="marca__logo" src="/img/logo-melamincorp.png" [alt]="empresa" width="463" height="120" loading="lazy" />
         </a>
         <p>Venta de planchas de melamina con optimización del despiece, corte, canteado e instalación en obra.</p>
         <div class="pie__muestras" aria-hidden="true">

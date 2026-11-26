@@ -10,8 +10,8 @@ import { AuthService } from '../core/services/auth.service';
   template: `
     <div class="admin">
       <aside class="admin__lateral no-imprimir">
-        <a routerLink="/admin" class="marca marca--clara">
-          <span class="marca__canto" aria-hidden="true"></span>{{ empresa }}
+        <a routerLink="/admin" class="marca marca--clara" [attr.aria-label]="empresa + ', inicio del panel'">
+          <img class="marca__logo" src="/img/logo-melamincorp.png" [alt]="empresa" width="463" height="120" />
         </a>
         <nav class="admin__nav" aria-label="Secciones del panel">
           @if (auth.puede('productos')) { <a routerLink="/admin/productos" routerLinkActive="activo">Productos</a> }
