@@ -158,8 +158,4 @@ frontend/src/app/
 - Guarda las imágenes en un servicio externo (S3, Cloudinary) cambiando solo `AlmacenamientoService`.
 - Compila el frontend con `npm run build` y sírvelo con Nginx o un hosting estático.
 
-## Ideas para seguir
 
-Costo de envío por distrito, correos de confirmación (Spring Mail), comprobantes electrónicos SUNAT
-(vía un OSE/PSE como Nubefact), cotizador de cortes para tableros, galería de varias fotos por producto
-y SEO con Angular SSR.
