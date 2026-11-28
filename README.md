@@ -150,12 +150,3 @@ frontend/src/app/
 3. Prueba con las tarjetas de prueba de su documentación.
 4. Antes de producción revisa en `docs.culqi.com` si hay cambios en el Checkout o en la API de cargos,
    y considera activar 3D Secure y webhooks.
-
-## Para producción
-
-- Cambia `ddl-auto` a `validate` y usa **Flyway** para migraciones.
-- Usa secretos reales (`JWT_SECRET`, contraseña del admin, llaves de Culqi) por variables de entorno.
-- Guarda las imágenes en un servicio externo (S3, Cloudinary) cambiando solo `AlmacenamientoService`.
-- Compila el frontend con `npm run build` y sírvelo con Nginx o un hosting estático.
-
-
